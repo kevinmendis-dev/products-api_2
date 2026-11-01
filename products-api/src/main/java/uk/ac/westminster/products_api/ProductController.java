@@ -27,8 +27,9 @@ public class ProductController {
 
     // Add a new product
     @PostMapping("/products")
-    public Product addProduct(@RequestBody Product product) {
-        return productService.addProduct(product);
+    public DigitalProduct addProduct(@RequestBody DigitalProduct product) {
+        // Product is abstract, so Jackson cannot instantiate it directly.
+        return(DigitalProduct) productService.addProduct(product);
     }
 
     @DeleteMapping("/products/{id}")
@@ -39,6 +40,11 @@ public class ProductController {
     @GetMapping("/products/search")
     public List<Product> search(@RequestParam String name) {
         return productService.findByName(name);
+    }
+
+    @GetMapping("/products/summaries")
+    public List<String> getAllSummaries() {
+        return productService.getAllSummaries();
     }
 }
 
